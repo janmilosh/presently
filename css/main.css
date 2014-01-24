@@ -1,0 +1,37 @@
+
+[ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak],
+.ng-cloak, .x-ng-cloak,
+.ng-hide {
+  display: none !important;
+}
+
+ng\:form {
+  display: block;
+}
+
+body {
+	background: #222;
+}
+
+h1, h2, h3 {
+	font-family: 'Varela Round', sans-serif;
+}
+
+#datetime {
+	text-align: center;
+}
+
+#datetime h1 {
+	font-size: 8em;
+	color: #8F923D;
+}
+
+#datetime h2 {
+	font-size: 3.0em;
+	color: #8F923D;
+}
+
+#datetime h3 {
+	font-size: 3.0em;
+	color: #8F923D;
+}

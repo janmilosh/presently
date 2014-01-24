@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html data-ng-app="myApp" data-ng-csp="">
+	<head>
+		<meta charset="UTF-8">
+		<title>Presently</title>
+		<link href='http://fonts.googleapis.com/css?family=Varela+Round' rel='stylesheet' type='text/css'>
+		<link rel="stylesheet" href="css/bootstrap.min.css">
+		<link rel="stylesheet" href="css/main.css">
+	</head>
+	<body>
+		<div class="container">
+			<div id="datetime">
+				<div ng-controller="MainCtrl">
+					<h1>{{date.raw | date: 'h:mm ss'}}</h1>
+					<h3>{{date.raw | date: 'EEEE'}}</h3>
+					<h2>{{date.raw | date: 'MMMM d, yyyy'}}</h2>
+				</div>
+			</div>
+		</div>
+		<script src="./js/vendor/angular.min.js"></script>
+		<script src="./js/vendor/angular-route.min.js"></script>
+		<script src="./js/app.js"></script>
+	</body>
+</html>
