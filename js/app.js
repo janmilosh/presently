@@ -24,7 +24,7 @@ angular.module('myApp', [])
 					// The wunderground API returns the
 					// object that nests the forecasts inside
 					// the forecast.simpleforecast key
-					d.resolve(data.forecast.simpleforecast);
+					d.resolve(data.forecast);
 				}).error(function(err) {
 					d.reject(err);
 				});
@@ -50,4 +50,5 @@ angular.module('myApp', [])
 	.then(function(data) {
 		$scope.weather.forecast = data;
 	});
+
 });

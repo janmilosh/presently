@@ -23,6 +23,7 @@ html {
 }
 
 body {
+	padding-top: 30px;
 	background:white;
 	box-shadow: inset 0 0 30px rgba(0, 0, 0, 0.2);
 	height: 100%;
@@ -36,6 +37,7 @@ h1, h2, h3, h4, p {
 #datetime {
 	text-align: center;
 	margin-bottom: 40px;
+	padding-right: 45px;
 }
 
 #datetime h1 {
@@ -66,12 +68,36 @@ h1, h2, h3, h4, p {
 	font-size: 2em;
 }
 
+.long-forecast {
+	margin: 40px 20px 60px 60px;
+	padding: 15px 15px 1px;
+	background: #F4F4F4;
+	border-radius: 4px;
+}
+
+.long-forecast p {
+	font-size: 1.15em;
+}
+
+.long-forecast p span {
+	margin-right: 5px;
+	background: #1888BD;
+	color: #fff;
+	padding: 0 3px;
+	border-radius: 3px;
+}
+
 #forecast p {
 	font-size: 1.5em;
 }
 
 #forecast ul li .today h3, #forecast ul li .today h4 {
-	color: #DD4E2A;
+	/*color: #DD4E2A;*/
+}
+
+a:hover {
+	text-decoration: none;
+	color: #1888BD;
 }
 
 img {

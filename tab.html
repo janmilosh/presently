@@ -9,8 +9,14 @@
 	</head>
 	<body>
 		<div ng-controller="MainCtrl" class="container">
-			<div id="datetime">
-				<div >
+			<div class="row">
+				<div class="col-md-6">
+					<div class="long-forecast">
+						<p><span>Today</span> {{weather.forecast.txt_forecast.forecastday[0].fcttext}}<br><br>
+							<span>Tonight</span> {{weather.forecast.txt_forecast.forecastday[1].fcttext}}</p>
+					</div>
+				</div>
+				<div id="datetime" class="col-md-6">
 					<h1>{{date.raw | date: 'h:mm a'}}</h1>
 					<h3>{{date.raw | date: 'EEEE'}}</h3>
 					<h2>{{date.raw | date: 'MMMM d, yyyy'}}</h2>
@@ -18,16 +24,17 @@
 			</div>
 			<div id="forecast">
 				<ul class="row list-unstyled">
-					<li ng-repeat="day in weather.forecast.forecastday" class="col-md-3">
+					<li ng-repeat="day in weather.forecast.simpleforecast.forecastday" class="col-md-3">
 						<div ng-class="{today: {{$first}}}">
 							<p><img class="{{ day.icon }}" ng-src="{{ day.icon_url }}">
 								<span ng-class="{'hide-snow': {{day.snow_allday.in}} <= 0}">{{day.snow_allday.in}} in</span></p>
-							<h3>{{ day.high.fahrenheit }}/{{ day.low.fahrenheit }}</h3>
-							<h4 ng-if="{{$first}}">Now</h4>
+							<h3><a href="#" title="{{weather.forecast.txt_forecast.forecastday[$index*2].title}}: {{weather.forecast.txt_forecast.forecastday[$index*2].fcttext}}---{{weather.forecast.txt_forecast.forecastday[$index*2 + 1].title}}: {{weather.forecast.txt_forecast.forecastday[$index*2 + 1].fcttext}}">
+								{{ day.high.fahrenheit }}/{{ day.low.fahrenheit }}</a></h3>							
+							<h4 ng-if="{{$first}}">Today</h4>
 							<h4 ng-if="{{!$first}}">{{ day.date.weekday }}</h4>
 						</div>
 					</li>
-				</ul>
+				</ul>			
 			</div>
 		</div>
 		<script src="./js/vendor/angular.min.js"></script>
