@@ -1,3 +1,4 @@
+@charset "UTF-8";
 
 [ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak],
 .ng-cloak, .x-ng-cloak,
@@ -9,30 +10,70 @@ ng\:form {
   display: block;
 }
 
-body {
-	background: #222 url('../images/moulin.png');
+[ng-if="false"] {
+	display: none;
 }
 
-h1, h2, h3 {
+.hide-snow {
+	display: none;
+}
+
+html {
+	height: 100%;
+}
+
+body {
+	background:white;
+	box-shadow: inset 0 0 30px rgba(0, 0, 0, 0.2);
+	height: 100%;
+}
+
+h1, h2, h3, h4, p {
 	font-family: 'Varela Round', sans-serif;
+	color: #1888BD;
 }
 
 #datetime {
 	text-align: center;
+	margin-bottom: 40px;
 }
 
 #datetime h1 {
-	margin-top: 0.5em;
 	font-size: 8em;
-	color: #8F923D;
+	margin-bottom: 0;
 }
 
 #datetime h2 {
 	font-size: 3.0em;
-	color: #8F923D;
+	margin-bottom: 0;
 }
 
 #datetime h3 {
 	font-size: 3.0em;
-	color: #5D5F13;
+	margin-bottom: 0;
+}
+
+#forecast ul li {
+	font-size: 4.5 em;
+	text-align: center;
+}
+
+#forecast ul li h3 {
+	font-size: 3em;
+}
+
+#forecast h4 {
+	font-size: 2em;
+}
+
+#forecast p {
+	font-size: 1.5em;
+}
+
+#forecast ul li .today h3, #forecast ul li .today h4 {
+	color: #DD4E2A;
+}
+
+img {
+	margin-right: 10px;
 }
