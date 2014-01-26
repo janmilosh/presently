@@ -21,9 +21,6 @@ angular.module('myApp', [])
 					url: self.getUrl("forecast", city),
 					cache: true
 				}).success(function(data) {
-					// The wunderground API returns the
-					// object that nests the forecasts inside
-					// the forecast.simpleforecast key
 					d.resolve(data.forecast);
 				}).error(function(err) {
 					d.reject(err);
@@ -33,9 +30,11 @@ angular.module('myApp', [])
 		}
 	}
 })
+
 .config(function(WeatherProvider) {
 	WeatherProvider.setApiKey('daea4dbf8e2953aa');
 })
+
 .controller('MainCtrl', function($scope, $timeout, Weather) {
 
 	$scope.date = {};
@@ -53,27 +52,26 @@ angular.module('myApp', [])
 		$scope.weather.forecast = data;
 	});
 
-	$scope.mouseEnterForecast = function(index) {
+	function whatsTheWeather(index) {
 		$scope.gotWeather = $scope.success;
 		$scope.dayLabel = $scope.weather.forecast.txt_forecast.forecastday[index*2].title;
 		$scope.nightLabel = $scope.weather.forecast.txt_forecast.forecastday[index*2 + 1].title;
 		$scope.dayTime =  $scope.weather.forecast.txt_forecast.forecastday[index*2].fcttext;
 		$scope.nightTime = $scope.weather.forecast.txt_forecast.forecastday[index*2 +1].fcttext;
+	}
+	
+	$scope.$watch('success', function(newValue, oldValue) {
+	  if (newValue === true) {
+	  	whatsTheWeather(0);
+	  }
+	});
+
+	$scope.mouseEnterForecast = function(index) {
+		whatsTheWeather(index);
+	};	
+
+	$scope.mouseOutForecast = function(index) {
+		whatsTheWeather(0);
 	};
-
-	$timeout(function() {
-		$scope.gotWeather = $scope.success; 
-		$scope.dayLabel = $scope.weather.forecast.txt_forecast.forecastday[0].title;
-		$scope.nightLabel = $scope.weather.forecast.txt_forecast.forecastday[1].title;
-		$scope.dayTime = $scope.weather.forecast.txt_forecast.forecastday[0].fcttext;
-		$scope.nightTime = $scope.weather.forecast.txt_forecast.forecastday[1].fcttext;
-	}, 700);
-
-	$scope.mouseOutForecast = function() {
-		$scope.dayLabel = $scope.weather.forecast.txt_forecast.forecastday[0].title;
-		$scope.nightLabel = $scope.weather.forecast.txt_forecast.forecastday[1].title;
-		$scope.dayTime =  $scope.weather.forecast.txt_forecast.forecastday[0].fcttext;
-		$scope.nightTime = $scope.weather.forecast.txt_forecast.forecastday[1].fcttext;
-	};
-
+	
 });
