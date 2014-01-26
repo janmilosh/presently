@@ -9,11 +9,11 @@
 	</head>
 	<body>
 		<div ng-controller="MainCtrl" class="container">
-			<div class="row">
+			<div class="row top-section">
 				<div class="col-md-6">
-					<div class="long-forecast">
-						<p><span>Today</span> {{weather.forecast.txt_forecast.forecastday[0].fcttext}}<br><br>
-							<span>Tonight</span> {{weather.forecast.txt_forecast.forecastday[1].fcttext}}</p>
+					<div ng-show="gotWeather" class="long-forecast">
+						<p><span>{{dayLabel}}</span> {{dayTime}}<br><br>
+							<span>{{nightLabel}}</span> {{nightTime}}</p>
 					</div>
 				</div>
 				<div id="datetime" class="col-md-6">
@@ -28,10 +28,11 @@
 						<div ng-class="{today: {{$first}}}">
 							<p><img class="{{ day.icon }}" ng-src="{{ day.icon_url }}">
 								<span ng-class="{'hide-snow': {{day.snow_allday.in}} <= 0}">{{day.snow_allday.in}} in</span></p>
-							<h3><a href="#" title="{{weather.forecast.txt_forecast.forecastday[$index*2].title}}: {{weather.forecast.txt_forecast.forecastday[$index*2].fcttext}}---{{weather.forecast.txt_forecast.forecastday[$index*2 + 1].title}}: {{weather.forecast.txt_forecast.forecastday[$index*2 + 1].fcttext}}">
-								{{ day.high.fahrenheit }}/{{ day.low.fahrenheit }}</a></h3>							
-							<h4 ng-if="{{$first}}">Today</h4>
-							<h4 ng-if="{{!$first}}">{{ day.date.weekday }}</h4>
+							<h3>
+								<span class="hover-area" ng-mouseover="mouseEnterForecast($index)" ng-mouseout="mouseOutForecast()">
+								{{ day.high.fahrenheit }}/{{ day.low.fahrenheit }}</span>
+							</h3>															
+							<h4>{{ day.date.weekday }}</h4>
 						</div>
 					</li>
 				</ul>			

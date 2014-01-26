@@ -69,7 +69,7 @@ h1, h2, h3, h4, p {
 }
 
 .long-forecast {
-	margin: 40px 20px 60px 60px;
+	margin: 40px 20px 0 50px;
 	padding: 15px 15px 1px;
 	background: #F4F4F4;
 	border-radius: 4px;
@@ -77,6 +77,8 @@ h1, h2, h3, h4, p {
 
 .long-forecast p {
 	font-size: 1.15em;
+	max-height: 245px;
+	overflow: scroll;
 }
 
 .long-forecast p span {
@@ -95,9 +97,12 @@ h1, h2, h3, h4, p {
 	/*color: #DD4E2A;*/
 }
 
-a:hover {
-	text-decoration: none;
-	color: #1888BD;
+.hover-area {
+	cursor: pointer;
+}
+
+.top-section {
+	height: 347px;
 }
 
 img {

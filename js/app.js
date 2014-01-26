@@ -46,9 +46,34 @@ angular.module('myApp', [])
 	updateTime();
 
 	$scope.weather = {};
+	$scope.success = false;
 	Weather.getWeatherForecast("OH/Sunbury")
 	.then(function(data) {
+		$scope.success = true;
 		$scope.weather.forecast = data;
 	});
+
+	$scope.mouseEnterForecast = function(index) {
+		$scope.gotWeather = $scope.success;
+		$scope.dayLabel = $scope.weather.forecast.txt_forecast.forecastday[index*2].title;
+		$scope.nightLabel = $scope.weather.forecast.txt_forecast.forecastday[index*2 + 1].title;
+		$scope.dayTime =  $scope.weather.forecast.txt_forecast.forecastday[index*2].fcttext;
+		$scope.nightTime = $scope.weather.forecast.txt_forecast.forecastday[index*2 +1].fcttext;
+	};
+
+	$timeout(function() {
+		$scope.gotWeather = $scope.success; 
+		$scope.dayLabel = $scope.weather.forecast.txt_forecast.forecastday[0].title;
+		$scope.nightLabel = $scope.weather.forecast.txt_forecast.forecastday[1].title;
+		$scope.dayTime = $scope.weather.forecast.txt_forecast.forecastday[0].fcttext;
+		$scope.nightTime = $scope.weather.forecast.txt_forecast.forecastday[1].fcttext;
+	}, 700);
+
+	$scope.mouseOutForecast = function() {
+		$scope.dayLabel = $scope.weather.forecast.txt_forecast.forecastday[0].title;
+		$scope.nightLabel = $scope.weather.forecast.txt_forecast.forecastday[1].title;
+		$scope.dayTime =  $scope.weather.forecast.txt_forecast.forecastday[0].fcttext;
+		$scope.nightTime = $scope.weather.forecast.txt_forecast.forecastday[1].fcttext;
+	};
 
 });
