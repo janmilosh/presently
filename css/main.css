@@ -126,6 +126,9 @@ img {
 		display: flex;
 	  align-items: center;
 	}
+	#forecast {
+		height: 166px;
+	}
 }
 
 @media (max-width: 1199px) {
