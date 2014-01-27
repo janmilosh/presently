@@ -80,12 +80,12 @@ h1, h2, h3, h4, p {
 
 .transition { 
 	opacity: 0;
-  transition: opacity linear 0.65s;	
+  transition: opacity ease-in-out 0.9s;	
 }
 
 .active {
 	opacity: 1;
-  transition: opacity linear 0.65s;
+  transition: opacity ease-in-out 0.9s;
 }
 
 .long-forecast p {

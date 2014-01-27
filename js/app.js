@@ -76,7 +76,7 @@ angular.module('myApp', [])
 				$scope.transitionClass = ''
 				$scope.activeClass = 'active';
 				whatsTheWeather(index);
-			}, 800);
+			}, 1000);
 		} else {
 			whatsTheWeather(index);
 		}	
@@ -90,7 +90,7 @@ angular.module('myApp', [])
 				$scope.transitionClass = '';
 				$scope.activeClass = 'active';
 				whatsTheWeather(0);
-			}, 800);
+			}, 1000);
 		} else {
 			whatsTheWeather(0);
 		}
