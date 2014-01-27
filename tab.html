@@ -10,13 +10,13 @@
 	<body>
 		<div ng-controller="MainCtrl" class="container">
 			<div class="row top-section">
-				<div class="col-md-6">
-					<div ng-show="gotWeather" class="long-forecast">
+				<div class="col-sm-6 hidden-xs">
+					<div ng-show="gotWeather" class="long-forecast {{transitionClass}} {{activeClass}}">
 						<p><span>{{dayLabel}}</span> {{dayTime}}<br><br>
 							<span>{{nightLabel}}</span> {{nightTime}}</p>
 					</div>
 				</div>
-				<div id="datetime" class="col-md-6">
+				<div id="datetime" class="col-sm-6">
 					<h1>{{date.raw | date: 'h:mm a'}}</h1>
 					<h3>{{date.raw | date: 'EEEE'}}</h3>
 					<h2>{{date.raw | date: 'MMMM d, yyyy'}}</h2>
@@ -24,12 +24,12 @@
 			</div>
 			<div id="forecast">
 				<ul class="row list-unstyled">
-					<li ng-repeat="day in weather.forecast.simpleforecast.forecastday" class="col-md-3">
+					<li ng-repeat="day in weather.forecast.simpleforecast.forecastday" class="col-sm-3">
 						<div ng-class="{today: {{$first}}}">
 							<p><img class="{{ day.icon }}" ng-src="{{ day.icon_url }}">
 								<span ng-class="{'hide-snow': {{day.snow_allday.in}} <= 0}">{{day.snow_allday.in}} in</span></p>
 							<h3>
-								<span class="hover-area" ng-mouseover="mouseEnterForecast($index)" ng-mouseout="mouseOutForecast()">
+								<span class="hover-area" ng-mouseover="mouseEnterForecast($index)" ng-mouseout="mouseOutForecast($index)">
 								{{ day.high.fahrenheit }}/{{ day.low.fahrenheit }}</span>
 							</h3>															
 							<h4>{{ day.date.weekday }}</h4>

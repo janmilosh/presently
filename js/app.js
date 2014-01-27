@@ -62,16 +62,37 @@ angular.module('myApp', [])
 	
 	$scope.$watch('success', function(newValue, oldValue) {
 	  if (newValue === true) {
+	  	$scope.activeClass = 'active';
+	  	$scope.transitionClass = '';
 	  	whatsTheWeather(0);
 	  }
 	});
 
 	$scope.mouseEnterForecast = function(index) {
-		whatsTheWeather(index);
+		if (index > 0 ) {	
+			$scope.activeClass = '';
+			$scope.transitionClass = 'transition'
+			$timeout(function() {
+				$scope.transitionClass = ''
+				$scope.activeClass = 'active';
+				whatsTheWeather(index);
+			}, 800);
+		} else {
+			whatsTheWeather(index);
+		}	
 	};	
 
 	$scope.mouseOutForecast = function(index) {
-		whatsTheWeather(0);
-	};
-	
+		if (index > 0 ) {
+			$scope.activeClass = '';
+			$scope.transitionClass = 'transition';
+			$timeout(function() {
+				$scope.transitionClass = '';
+				$scope.activeClass = 'active';
+				whatsTheWeather(0);
+			}, 800);
+		} else {
+			whatsTheWeather(0);
+		}
+	};	
 });

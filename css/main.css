@@ -56,7 +56,6 @@ h1, h2, h3, h4, p {
 }
 
 #forecast ul li {
-	font-size: 4.5 em;
 	text-align: center;
 }
 
@@ -73,6 +72,20 @@ h1, h2, h3, h4, p {
 	padding: 15px 15px 1px;
 	background: #F4F4F4;
 	border-radius: 4px;
+}
+
+.today .hover-area {
+	cursor: default;
+}
+
+.transition { 
+	opacity: 0;
+  transition: opacity linear 0.65s;	
+}
+
+.active {
+	opacity: 1;
+  transition: opacity linear 0.65s;
 }
 
 .long-forecast p {
@@ -107,4 +120,37 @@ h1, h2, h3, h4, p {
 
 img {
 	margin-right: 10px;
+}
+
+@media (max-width: 1199px) {
+	body {
+		padding-top: 0;
+		box-shadow: none;
+	}
+
+	.long-forecast p {
+		max-height: 358px;
+	}
+}
+
+@media (max-width: 992px) {
+	
+	.top-section {
+		height: auto;
+	}
+
+	#datetime {
+		padding-right: 15px;
+	}
+
+	.long-forecast {
+		margin-left: 0;
+		margin-right: 0;
+	}	
+}
+
+@media (max-width: 767px) {
+	#forecast ul li {
+		margin-top: 35px;
+	}
 }
