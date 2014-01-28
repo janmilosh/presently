@@ -33,24 +33,29 @@ h1, h2, h3, h4, p {
 	color: #1888BD;
 }
 
+ul {
+	margin-bottom : 0;
+}
+
 #datetime {
 	text-align: center;
 	margin: 0 auto;
 }
 
+h1, h2, h3 {
+	margin: 10px 0;
+}
+
 #datetime h1 {
 	font-size: 8em;
-	margin-bottom: 0;
 }
 
 #datetime h2 {
 	font-size: 3.0em;
-	margin-bottom: 0;
 }
 
 #datetime h3 {
 	font-size: 3.0em;
-	margin-bottom: 0;
 }
 
 #forecast ul li {
@@ -113,8 +118,7 @@ h1, h2, h3, h4, p {
 }
 
 .top-section {
-	height: 360px;
-	margin-bottom: 30px;
+	margin-bottom: 50px;
 }
 
 img {
@@ -127,29 +131,8 @@ img {
 	  align-items: center;
 	}
 
-	#forecast {
-		height: 166px;
-	}
-
-	.flex-wrapper {
-		height: 360px;
-		display: flex;
-	  align-items: center;
-	}
-
-	.container {
-		height: 630px;
-	}
-
 }
 
-@media (max-width: 1101px) {
-	.top-section,
-	.flex-wrapper {
-		height: 420px;
-	}
-
-}
 
 @media (max-width: 1199px) {
 	body {
@@ -168,11 +151,6 @@ img {
 
 @media (max-width: 961px) {
 	
-	.top-section,
-	.flex-wrapper {
-		height: 450px;
-	}
-
 	.long-forecast {
 		margin-left: 0;
 		margin-right: 0;
@@ -181,10 +159,6 @@ img {
 
 @media (max-width: 992px) {
 	
-	.top-section {
-		margin-bottom: 30px;
-	}
-
 	.container {
 		width: 100%;
 	}
@@ -192,9 +166,8 @@ img {
 
 @media (max-width: 767px) {
 
-	.top-section,
-	.flex-wrapper {
-		height: auto;
+	.top-section {
+		margin-bottom: 30px;
 	}
 
 	#forecast ul li {
