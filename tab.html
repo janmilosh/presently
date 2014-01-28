@@ -11,15 +11,21 @@
 		<div ng-controller="MainCtrl" class="container">
 			<div class="row top-section">
 				<div class="col-sm-6 hidden-xs">
-					<div ng-show="gotWeather" class="long-forecast {{transitionClass}} {{activeClass}}">
-						<p><span>{{dayLabel}}</span> {{dayTime}}<br><br>
-							<span>{{nightLabel}}</span> {{nightTime}}</p>
+					<div class="flex-wrapper">
+						<div ng-show="gotWeather" class="long-forecast {{transitionClass}} {{activeClass}}">
+							<p><span>{{dayLabel}}</span> {{dayTime}}<br><br>
+								<span>{{nightLabel}}</span> {{nightTime}}</p>
+						</div>
 					</div>
 				</div>
-				<div id="datetime" class="col-sm-6">
-					<h1>{{date.raw | date: 'h:mm a'}}</h1>
-					<h3>{{date.raw | date: 'EEEE'}}</h3>
-					<h2>{{date.raw | date: 'MMMM d, yyyy'}}</h2>
+				<div class="col-sm-6">
+					<div class="flex-wrapper">
+						<div id="datetime" >
+							<h1>{{date.raw | date: 'h:mm a'}}</h1>
+							<h3>{{date.raw | date: 'EEEE'}}</h3>
+							<h2>{{date.raw | date: 'MMMM d, yyyy'}}</h2>
+						</div>
+					</div>
 				</div>
 			</div>
 			<div id="forecast">
