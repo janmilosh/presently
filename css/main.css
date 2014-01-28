@@ -131,6 +131,14 @@ img {
 	  align-items: center;
 	}
 
+	.container {
+		height: 461px;
+	}
+
+	#forecast {
+		height: 156px;
+	}
+
 }
 
 
@@ -154,7 +162,11 @@ img {
 	.long-forecast {
 		margin-left: 0;
 		margin-right: 0;
-	}	
+	}
+
+	.container {
+		height: 584px;
+	}
 }
 
 @media (max-width: 992px) {
