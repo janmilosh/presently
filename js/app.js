@@ -46,7 +46,7 @@ angular.module('myApp', ['ngRoute', 'ngSanitize'])
 	})
 	.otherwise({redirectTo: '/'});
 }])
-.controller('MainCtrl', function($scope, $timeout, Weather) {
+.controller('MainCtrl', function($scope, $timeout, Weather, UserService) {
 
 	$scope.date = {};
 	var updateTime = function() {
@@ -57,7 +57,8 @@ angular.module('myApp', ['ngRoute', 'ngSanitize'])
 
 	$scope.weather = {};
 	$scope.success = false;
-	Weather.getWeatherForecast("OH/Sunbury")
+	$scope.user = UserService.user;
+	Weather.getWeatherForecast($scope.user.location)
 	.then(function(data) {
 		$scope.success = true;
 		$scope.weather.forecast = data;
@@ -106,4 +107,31 @@ angular.module('myApp', ['ngRoute', 'ngSanitize'])
 			whatsTheWeather(0);
 		}
 	};	
+})
+.factory('UserService', function() {
+	var defaults = {
+		location: 'autoip'
+	};
+
+	var service = {
+		user: {},
+		save: function() {
+			localStorage.presently = angular.toJson(service.user);
+		},
+		restore: function() {
+			//Pull from localStorage
+			service.user = angular.fromJson(localStorage.presently) || defaults;
+			return service.user;
+		}
+	};
+	// Immediately call restore from the session storage
+	// so we have our user data available immediately
+	service.restore();
+	return service;
+})
+.controller('SettingsCtrl', function($scope, UserService) {
+		$scope.user = UserService.user;
+		$scope.save = function() {
+			UserService.save();
+		}
 });
