@@ -97,8 +97,6 @@ h1, h2, h3 {
 
 .long-forecast p {
 	font-size: 1.15em;
-	max-height: 340px;
-	overflow: scroll;
 }
 
 .long-forecast p span {
@@ -154,6 +152,13 @@ img {
 
 	.long-forecast p {
 		max-height: 360px;
+	}
+}
+
+@media (min-width: 962px) {
+	.long-forecast p {
+		max-height: 210px;
+		overflow: scroll;
 	}
 }
 
