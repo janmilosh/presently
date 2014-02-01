@@ -66,10 +66,17 @@ angular.module('myApp', ['ngRoute', 'ngSanitize'])
 
 	$scope.prettyLocation = function() {
 		var location = $scope.user.location;
+		var capitalize = function(str) {
+    	var pieces = str.split(" ");
+    	for (var i = 0; i < pieces.length; i++) {
+        var j = pieces[i].charAt(0).toUpperCase();
+        pieces[i] = j + pieces[i].substr(1);
+    	}
+    	return pieces.join(" ");
+		};
 		if (location !== 'autoip') {
-			var state = $scope.user.location.substring(0, 2);
-			var city = $scope.user.location.substring(3).replace('_',' ');
-			return city + ', ' + state;
+			prettifiedLocation = capitalize(location);
+			return prettifiedLocation;
 		} else {
 			return '';
 		}
@@ -123,7 +130,7 @@ angular.module('myApp', ['ngRoute', 'ngSanitize'])
 
 .factory('UserService', function() {
 	var defaults = {
-		location: 'OH/Columbus'
+		location: 'autoip'
 	};
 
 	var service = {
@@ -146,5 +153,4 @@ angular.module('myApp', ['ngRoute', 'ngSanitize'])
 			UserService.save();
 			$location.path('/');
 		}
-		$scope.fetchCities = Weather.getCityDetails;
 });

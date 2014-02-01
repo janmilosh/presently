@@ -30,7 +30,7 @@ input[type="text"] {
 	border-radius: 3px;
 	margin-bottom: 5px;
 	margin-top: 100px;
-	border: 1px solid #bbb;
+	border: 1px solid #AFC3CF;
 }
 
 #actionbar {
@@ -74,7 +74,7 @@ ul {
 #datetime {
 	text-align: center;
 	margin: 0 auto;
-	min-height: 250px;
+	min-height: 260px;
 }
 
 h1, h2, h3 {
@@ -172,7 +172,7 @@ img {
 	}
 
 	.container {
-		height: 461px;
+		height: 485px;
 	}
 
 	#forecast {
@@ -181,6 +181,7 @@ img {
 
 	input[type="text"] {
 		margin-top: 180px;
+		color: #1888BD;
 	}
 }
 
