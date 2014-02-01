@@ -14,6 +14,25 @@ ng\:form {
 	display: none;
 }
 
+.city-input {
+	width: 300px;
+	margin: 0 auto;
+}
+
+input {
+	width: 100%;
+}
+
+input[type="text"] {
+	height: 35px;
+	font-size: 1.2em;
+	padding-left: 10px;
+	border-radius: 3px;
+	margin-bottom: 5px;
+	margin-top: 100px;
+	border: 1px solid #bbb;
+}
+
 #actionbar {
 	position: absolute;
 	bottom: 0.5em;
@@ -55,6 +74,7 @@ ul {
 #datetime {
 	text-align: center;
 	margin: 0 auto;
+	min-height: 250px;
 }
 
 h1, h2, h3 {
@@ -85,10 +105,17 @@ h1, h2, h3 {
 	font-size: 2em;
 }
 
+#datetime h4 {
+	font-size: 1.6em;
+	margin: 20px 0 0;
+}
+
 .long-forecast {
 	margin: 0 40px;
 	padding: 15px 15px 1px;
 	background: #F4F4F4;
+	background: none;
+	border: 1px solid #DCE4E9;
 	border-radius: 4px;
 }
 
@@ -152,6 +179,9 @@ img {
 		height: 156px;
 	}
 
+	input[type="text"] {
+		margin-top: 180px;
+	}
 }
 
 

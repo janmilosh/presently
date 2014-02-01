@@ -3,8 +3,8 @@ angular.module('myApp', ['ngRoute', 'ngSanitize'])
 .provider('Weather', function() {
 	var apiKey = "";
 	this.getUrl = function(type, ext) {
-		return "http://api.wunderground.com/api/" + 
-			this.apiKey + "/" + type + "/q/" +
+		return 'http://api.wunderground.com/api/' + 
+			this.apiKey + '/' + type + '/q/' +
 			ext + '.json';
 	};
 	this.setApiKey = function(key) {
@@ -18,7 +18,7 @@ angular.module('myApp', ['ngRoute', 'ngSanitize'])
 				var d = $q.defer();
 				$http({
 					method: 'GET',
-					url: self.getUrl("forecast", city),
+					url: self.getUrl('forecast', city),
 					cache: true
 				}).success(function(data) {
 					d.resolve(data.forecast);
@@ -51,7 +51,7 @@ angular.module('myApp', ['ngRoute', 'ngSanitize'])
 	$scope.date = {};
 	var updateTime = function() {
 		$scope.date.raw = new Date();
-		$timeout(updateTime, 1000)
+		$timeout(updateTime, 1000);
 	}
 	updateTime();
 
@@ -63,6 +63,18 @@ angular.module('myApp', ['ngRoute', 'ngSanitize'])
 		$scope.success = true;
 		$scope.weather.forecast = data;
 	});
+
+	$scope.prettyLocation = function() {
+		var location = $scope.user.location;
+		if (location !== 'autoip') {
+			var state = $scope.user.location.substring(0, 2);
+			var city = $scope.user.location.substring(3).replace('_',' ');
+			return city + ', ' + state;
+		} else {
+			return '';
+		}
+	};
+	
 
 	function whatsTheWeather(index) {
 		$scope.gotWeather = $scope.success;
@@ -108,9 +120,10 @@ angular.module('myApp', ['ngRoute', 'ngSanitize'])
 		}
 	};	
 })
+
 .factory('UserService', function() {
 	var defaults = {
-		location: 'autoip'
+		location: 'OH/Columbus'
 	};
 
 	var service = {
@@ -124,14 +137,14 @@ angular.module('myApp', ['ngRoute', 'ngSanitize'])
 			return service.user;
 		}
 	};
-	// Immediately call restore from the session storage
-	// so we have our user data available immediately
 	service.restore();
 	return service;
 })
-.controller('SettingsCtrl', function($scope, UserService) {
+.controller('SettingsCtrl', function($scope, $location, UserService, Weather) {
 		$scope.user = UserService.user;
 		$scope.save = function() {
 			UserService.save();
+			$location.path('/');
 		}
+		$scope.fetchCities = Weather.getCityDetails;
 });
