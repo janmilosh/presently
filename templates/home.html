@@ -8,8 +8,8 @@
 	</div>
 	<div class="col-sm-6">
 		<div id="datetime" >
-			<h1>{{date.raw | date: 'h:mm a'}}</h1>
-			<h3>{{date.raw | date: 'MMMM d, yyyy'}}</h3>
+			<h1>{{date.tz | date: 'h:mm a'}}</h1>
+			<h3>{{date.tz | date: 'MMMM d, yyyy'}}</h3>
 			<h4>{{prettyLocation()}}</h4>
 		</div>
 	</div>

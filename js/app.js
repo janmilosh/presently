@@ -48,21 +48,28 @@ angular.module('myApp', ['ngRoute', 'ngSanitize'])
 }])
 .controller('MainCtrl', function($scope, $timeout, Weather, UserService) {
 
-	$scope.date = {};
-	var updateTime = function() {
-		$scope.date.raw = new Date();
-		$timeout(updateTime, 1000);
-	}
-	updateTime();
-
 	$scope.weather = {};
 	$scope.success = false;
 	$scope.user = UserService.user;
+	if(!$scope.user.location) {
+		$scope.user.location = 'autoip';
+	}
 	Weather.getWeatherForecast($scope.user.location)
 	.then(function(data) {
 		$scope.success = true;
 		$scope.weather.forecast = data;
+		$scope.timezone = $scope.weather.forecast.simpleforecast.forecastday[0].date.tz_long;
 	});
+
+	$scope.date = {};
+	var updateTime = function() {
+		$scope.date.tz = new Date(new Date().toLocaleString(
+          "en-US", {timeZone: $scope.timezone}
+        ));
+		$scope.date.raw = new Date();
+		$timeout(updateTime, 1000);
+	}
+	updateTime();
 
 	$scope.prettyLocation = function() {
 		var location = $scope.user.location;
@@ -89,6 +96,7 @@ angular.module('myApp', ['ngRoute', 'ngSanitize'])
 		$scope.nightLabel = $scope.weather.forecast.txt_forecast.forecastday[index*2 + 1].title;
 		$scope.dayTime =  $scope.weather.forecast.txt_forecast.forecastday[index*2].fcttext;
 		$scope.nightTime = $scope.weather.forecast.txt_forecast.forecastday[index*2 +1].fcttext;
+		$scope.timezone = $scope.weather.forecast.simpleforecast.forecastday[0].date.tz_long;
 	}
 	
 	$scope.$watch('success', function(newValue, oldValue) {
@@ -149,6 +157,7 @@ angular.module('myApp', ['ngRoute', 'ngSanitize'])
 })
 .controller('SettingsCtrl', function($scope, $location, UserService, Weather) {
 		$scope.user = UserService.user;
+		
 		$scope.save = function() {
 			UserService.save();
 			$location.path('/');
