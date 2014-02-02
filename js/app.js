@@ -26,9 +26,21 @@ angular.module('myApp', ['ngRoute', 'ngSanitize'])
 					d.reject(err);
 				});
 				return d.promise;
+			},
+			getCityDetails: function(query) {
+			  var d = $q.defer();
+			  $http({
+			    method: 'GET',
+			    url: "http://autocomplete.wunderground.com/aq?query=" + query
+			  }).success(function(data) {
+			    d.resolve(data.RESULTS);
+			  }).error(function(err) {
+			    d.reject(err);
+			  });
+			  return d.promise;
 			}
-		}
-	}
+		};
+	};
 })
 
 .config(function(WeatherProvider) {
@@ -46,6 +58,57 @@ angular.module('myApp', ['ngRoute', 'ngSanitize'])
 	})
 	.otherwise({redirectTo: '/'});
 }])
+.directive('autoFill', function($timeout, Weather) {
+  return {
+    restrict: 'EA',
+    scope: {
+      autoFill: '&',
+      ngModel: '='
+    },
+    compile: function(tEle, tAttrs) {
+      var tplEl = angular.element(
+      '<div class="typeahead"> \
+      	<input type="text" autocomplete="off" /> \
+      	<ul id="autolist" ng-show="reslist"> \
+        	<li ng-repeat="res in reslist">{{res.name}}</li> \
+      	</ul> \
+      </div>');
+      var input = tplEl.find('input');
+      input.attr('type', tAttrs.type);
+      input.attr('ng-model', tAttrs.ngModel);
+      tEle.replaceWith(tplEl);
+      return function(scope, ele, attrs, ctrl) {
+        var minKeyCount = attrs.minKeyCount || 3, timer;
+        ele.bind('keyup', function(e) {
+          val = ele.val();
+     //     scope.reslist = data;
+          if (val.length < minKeyCount) {
+            if (timer) $timeout.cancel(timer);
+            scope.reslist = null;
+            return;
+          } else {
+            if (timer) $timeout.cancel(timer);
+            timer = $timeout(function() {
+              scope.autoFill()(val)
+              .then(function(data) {
+                if (data && data.length > 0) {
+                  scope.reslist = data;
+                  scope.ngModel = data[0].name;
+                }
+              });
+            }, 1000);
+          }
+        });
+ 
+        // Hide the reslist on blur
+        input.bind('blur', function(e) {
+          scope.reslist = null;
+          scope.$digest();
+        });
+      };
+    }
+  };
+})
 .controller('MainCtrl', function($scope, $timeout, Weather, UserService) {
 
 	$scope.weather = {};
@@ -68,7 +131,7 @@ angular.module('myApp', ['ngRoute', 'ngSanitize'])
         ));
 		$scope.date.raw = new Date();
 		$timeout(updateTime, 1000);
-	}
+	};
 	updateTime();
 
 	$scope.prettyLocation = function() {
@@ -97,7 +160,7 @@ angular.module('myApp', ['ngRoute', 'ngSanitize'])
 		$scope.dayTime =  $scope.weather.forecast.txt_forecast.forecastday[index*2].fcttext;
 		$scope.nightTime = $scope.weather.forecast.txt_forecast.forecastday[index*2 +1].fcttext;
 		$scope.timezone = $scope.weather.forecast.simpleforecast.forecastday[0].date.tz_long;
-	}
+	};
 	
 	$scope.$watch('success', function(newValue, oldValue) {
 	  if (newValue === true) {
@@ -155,11 +218,13 @@ angular.module('myApp', ['ngRoute', 'ngSanitize'])
 	service.restore();
 	return service;
 })
-.controller('SettingsCtrl', function($scope, $location, UserService, Weather) {
-		$scope.user = UserService.user;
-		
-		$scope.save = function() {
-			UserService.save();
-			$location.path('/');
-		}
+.controller('SettingsCtrl', 
+  function($scope, $location, Weather, UserService) {
+    $scope.user = UserService.user;
+ 
+    $scope.save = function() {
+      UserService.save();
+      $location.path('/');
+    }
+    $scope.fetchCities = Weather.getCityDetails;
 });

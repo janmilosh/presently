@@ -31,6 +31,7 @@ input[type="text"] {
 	margin-bottom: 5px;
 	margin-top: 100px;
 	border: 1px solid #AFC3CF;
+	color: #1888BD;
 }
 
 #actionbar {
@@ -74,7 +75,7 @@ ul {
 #datetime {
 	text-align: center;
 	margin: 0 auto;
-	min-height: 260px;
+	min-height: 270px;
 }
 
 h1, h2, h3 {
@@ -165,6 +166,13 @@ img {
 	margin-right: 10px;
 }
 
+.typeahead ul {
+  max-height: 150px;
+  border: 1px solid orange;
+  padding: 3px;
+  overflow: auto;
+}
+
 @media (min-width: 768px) {
 	body {
 		display: flex;
@@ -172,7 +180,7 @@ img {
 	}
 
 	.container {
-		height: 485px;
+		height: 495px;
 	}
 
 	#forecast {
@@ -197,13 +205,13 @@ img {
 	}
 
 	.long-forecast p {
-		max-height: 360px;
+		max-height: 370px;
 	}
 }
 
 @media (min-width: 962px) {
 	.long-forecast p {
-		max-height: 210px;
+		max-height: 220px;
 		overflow: scroll;
 	}
 }
@@ -216,7 +224,7 @@ img {
 	}
 
 	.container {
-		height: 584px;
+		height: 594px;
 	}
 }
 

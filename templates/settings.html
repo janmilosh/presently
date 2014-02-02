@@ -1,9 +1,12 @@
 <div class="row">
 	<div class="city-input center-block">
 		<form ng-submit="save()">
-			<input type="text"
-				ng-model="user.location"
-				placeholder="Enter a location">
+			<input 	type="text"
+			        timezone="user.timezone"
+			        auto-fill="fetchCities"
+			        autocomplete="off"
+							ng-model="user.location"
+							placeholder="Location">
 			<input class="btn btn-primary"
 				type="submit" value="Save">
 		</form>
