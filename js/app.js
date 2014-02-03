@@ -81,7 +81,6 @@ angular.module('myApp', ['ngRoute', 'ngSanitize'])
         var minKeyCount = attrs.minKeyCount || 3, timer;
         ele.bind('keyup', function(e) {
           val = ele.val();
-     //     scope.reslist = data;
           if (val.length < minKeyCount) {
             if (timer) $timeout.cancel(timer);
             scope.reslist = null;

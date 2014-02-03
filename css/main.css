@@ -16,20 +16,22 @@ ng\:form {
 
 .city-input {
 	width: 300px;
-	margin: 0 auto;
+	margin: 100px auto 0;
 }
 
-input {
-	width: 100%;
+.button {
+	float: right;
 }
 
 input[type="text"] {
+	width: 235px;
 	height: 35px;
+	float: left;
 	font-size: 1.2em;
 	padding-left: 10px;
 	border-radius: 3px;
 	margin-bottom: 5px;
-	margin-top: 100px;
+	margin-right: 5px;
 	border: 1px solid #AFC3CF;
 	color: #1888BD;
 }
@@ -187,9 +189,8 @@ img {
 		height: 156px;
 	}
 
-	input[type="text"] {
+	.city-input {
 		margin-top: 180px;
-		color: #1888BD;
 	}
 }
 
