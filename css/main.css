@@ -168,11 +168,21 @@ img {
 	margin-right: 10px;
 }
 
-.typeahead ul {
-  max-height: 150px;
-  border: 1px solid orange;
+ul.citylist {
+  border: 1px solid #ccc;
+  border-radius: 3px;
   padding: 3px;
   overflow: auto;
+  width: 100%;
+  line-height: 23px;
+  font-size: 1.2em;
+  cursor: pointer;
+  max-height: 250px;
+  overflow: scroll;
+}
+
+ul.citylist li:hover {
+	color: #1888BD;
 }
 
 @media (min-width: 768px) {

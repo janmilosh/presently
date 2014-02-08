@@ -7,6 +7,7 @@ angular.module('myApp', ['ngRoute', 'ngSanitize'])
 			this.apiKey + '/' + type + '/q/' +
 			ext + '.json';
 	};
+
 	this.setApiKey = function(key) {
 		if (key) this.apiKey = key;
 	};
@@ -46,6 +47,7 @@ angular.module('myApp', ['ngRoute', 'ngSanitize'])
 .config(function(WeatherProvider) {
 	WeatherProvider.setApiKey('daea4dbf8e2953aa');
 })
+
 .config(['$routeProvider', function($routeProvider) {
 	$routeProvider
 	.when('/', {
@@ -58,69 +60,27 @@ angular.module('myApp', ['ngRoute', 'ngSanitize'])
 	})
 	.otherwise({redirectTo: '/'});
 }])
-.directive('autoFill', function($timeout, Weather) {
-  return {
-    restrict: 'EA',
-    scope: {
-      autoFill: '&',
-      ngModel: '='
-    },
-    compile: function(tEle, tAttrs) {
-      var tplEl = angular.element(
-      '<div class="typeahead"> \
-      	<input type="text" autocomplete="off" /> \
-      	<ul id="autolist" ng-show="reslist"> \
-        	<li ng-repeat="res in reslist">{{res.name}}</li> \
-      	</ul> \
-      </div>');
-      var input = tplEl.find('input');
-      input.attr('type', tAttrs.type);
-      input.attr('ng-model', tAttrs.ngModel);
-      tEle.replaceWith(tplEl);
-      return function(scope, ele, attrs, ctrl) {
-        var minKeyCount = attrs.minKeyCount || 3, timer;
-        ele.bind('keyup', function(e) {
-          val = ele.val();
-          if (val.length < minKeyCount) {
-            if (timer) $timeout.cancel(timer);
-            scope.reslist = null;
-            return;
-          } else {
-            if (timer) $timeout.cancel(timer);
-            timer = $timeout(function() {
-              scope.autoFill()(val)
-              .then(function(data) {
-                if (data && data.length > 0) {
-                  scope.reslist = data;
-                  scope.ngModel = data[0].name;
-                }
-              });
-            }, 1000);
-          }
-        });
- 
-        // Hide the reslist on blur
-        input.bind('blur', function(e) {
-          scope.reslist = null;
-          scope.$digest();
-        });
-      };
-    }
-  };
-})
-.controller('MainCtrl', function($scope, $timeout, Weather, UserService) {
 
+.controller('MainCtrl', function($rootScope, $scope, $timeout, $location, Weather, UserService) {
+	$rootScope.error = {};
+	$rootScope.error.message='Please enter a location.';
 	$scope.weather = {};
 	$scope.success = false;
 	$scope.user = UserService.user;
 	if(!$scope.user.location) {
 		$scope.user.location = 'autoip';
 	}
+
 	Weather.getWeatherForecast($scope.user.location)
 	.then(function(data) {
 		$scope.success = true;
 		$scope.weather.forecast = data;
-		$scope.timezone = $scope.weather.forecast.simpleforecast.forecastday[0].date.tz_long;
+		try {
+			$scope.timezone = $scope.weather.forecast.simpleforecast.forecastday[0].date.tz_long;
+		}
+		catch (e) {
+			$location.path('/settings');
+		}
 	});
 
 	$scope.date = {};
@@ -151,14 +111,22 @@ angular.module('myApp', ['ngRoute', 'ngSanitize'])
 		}
 	};
 	
-
 	function whatsTheWeather(index) {
-		$scope.gotWeather = $scope.success;
-		$scope.dayLabel = $scope.weather.forecast.txt_forecast.forecastday[index*2].title;
-		$scope.nightLabel = $scope.weather.forecast.txt_forecast.forecastday[index*2 + 1].title;
-		$scope.dayTime =  $scope.weather.forecast.txt_forecast.forecastday[index*2].fcttext;
-		$scope.nightTime = $scope.weather.forecast.txt_forecast.forecastday[index*2 +1].fcttext;
-		$scope.timezone = $scope.weather.forecast.simpleforecast.forecastday[0].date.tz_long;
+		try {
+			$rootScope.error.locationError = false;
+			$rootScope.error.message = 'Please enter a location.'
+			$scope.gotWeather = $scope.success;
+			$scope.dayLabel = $scope.weather.forecast.txt_forecast.forecastday[index*2].title;
+			$scope.nightLabel = $scope.weather.forecast.txt_forecast.forecastday[index*2 + 1].title;
+			$scope.dayTime =  $scope.weather.forecast.txt_forecast.forecastday[index*2].fcttext;
+			$scope.nightTime = $scope.weather.forecast.txt_forecast.forecastday[index*2 +1].fcttext;
+			$scope.timezone = $scope.weather.forecast.simpleforecast.forecastday[0].date.tz_long;
+		}
+		catch (e) {
+			$location.path('/settings');
+			$rootScope.error.message = 'Please try another location.';
+			$rootScope.error.locationError = true;
+		}
 	};
 	
 	$scope.$watch('success', function(newValue, oldValue) {
@@ -202,7 +170,6 @@ angular.module('myApp', ['ngRoute', 'ngSanitize'])
 	var defaults = {
 		location: 'autoip'
 	};
-
 	var service = {
 		user: {},
 		save: function() {
@@ -217,13 +184,30 @@ angular.module('myApp', ['ngRoute', 'ngSanitize'])
 	service.restore();
 	return service;
 })
+
 .controller('SettingsCtrl', 
-  function($scope, $location, Weather, UserService) {
+  function($scope, $rootScope, $location, $timeout, Weather, UserService) {
+  	console.log($rootScope.error.locationError);
+  	if($rootScope.error.locationError === false) {
+	  	$rootScope.error.message = 'Please enter a location.';
+	  } else {
+	  	$rootScope.error.message = 'Please try another location.';
+	  }
     $scope.user = UserService.user;
- 
     $scope.save = function() {
       UserService.save();
       $location.path('/');
-    }
-    $scope.fetchCities = Weather.getCityDetails;
+    };
+    $scope.searchCities = function() {
+	    $timeout(function() {
+		    $scope.fetchCities = Weather.getCityDetails($scope.user.location)
+		    	.then(function(data) {
+		    		$scope.success = true;
+		    		$scope.results = data;    		
+		    	});
+	    }, 500);	
+	  };
+    $scope.choose = function(index) {
+			$scope.user.location = $scope.results[index].name;
+		}	
 });
