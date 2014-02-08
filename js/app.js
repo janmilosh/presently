@@ -62,8 +62,7 @@ angular.module('myApp', ['ngRoute', 'ngSanitize'])
 }])
 
 .controller('MainCtrl', function($rootScope, $scope, $timeout, $location, Weather, UserService) {
-	$rootScope.error = {};
-	$rootScope.error.message='Please enter a location.';
+	$rootScope.message='Please enter a location.';
 	$scope.weather = {};
 	$scope.success = false;
 	$scope.user = UserService.user;
@@ -113,8 +112,8 @@ angular.module('myApp', ['ngRoute', 'ngSanitize'])
 	
 	function whatsTheWeather(index) {
 		try {
-			$rootScope.error.locationError = false;
-			$rootScope.error.message = 'Please enter a location.'
+			$rootScope.locationError = false;
+			$rootScope.message = 'Please enter a location.'
 			$scope.gotWeather = $scope.success;
 			$scope.dayLabel = $scope.weather.forecast.txt_forecast.forecastday[index*2].title;
 			$scope.nightLabel = $scope.weather.forecast.txt_forecast.forecastday[index*2 + 1].title;
@@ -124,8 +123,8 @@ angular.module('myApp', ['ngRoute', 'ngSanitize'])
 		}
 		catch (e) {
 			$location.path('/settings');
-			$rootScope.error.message = 'Please try another location.';
-			$rootScope.error.locationError = true;
+			$rootScope.message = 'Please try another location.';
+			$rootScope.locationError = true;
 		}
 	};
 	
@@ -187,11 +186,10 @@ angular.module('myApp', ['ngRoute', 'ngSanitize'])
 
 .controller('SettingsCtrl', 
   function($scope, $rootScope, $location, $timeout, Weather, UserService) {
-  	console.log($rootScope.error.locationError);
-  	if($rootScope.error.locationError === false) {
-	  	$rootScope.error.message = 'Please enter a location.';
+  	if($rootScope.locationError === false) {
+	  	$rootScope.message = 'Please enter a location.';
 	  } else {
-	  	$rootScope.error.message = 'Please try another location.';
+	  	$rootScope.message = 'Please try another location.';
 	  }
     $scope.user = UserService.user;
     $scope.save = function() {
