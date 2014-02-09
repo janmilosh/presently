@@ -123,8 +123,8 @@ angular.module('myApp', ['ngRoute', 'ngSanitize'])
 		}
 		catch (e) {
 			$location.path('/settings');
-			$rootScope.message = 'Please try another location.';
 			$rootScope.locationError = true;
+			$rootScope.message = 'Please try another location.';
 		}
 	};
 	
