@@ -185,12 +185,7 @@ angular.module('myApp', ['ngRoute', 'ngSanitize'])
 })
 
 .controller('SettingsCtrl', 
-  function($scope, $rootScope, $location, $timeout, Weather, UserService) {
-  	if($rootScope.locationError === false) {
-	  	$rootScope.message = 'Please enter a location.';
-	  } else {
-	  	$rootScope.message = 'Please try another location.';
-	  }
+  function($scope, $rootScope, $location, $timeout, Weather, UserService) {  	
     $scope.user = UserService.user;
     $scope.save = function() {
       UserService.save();
