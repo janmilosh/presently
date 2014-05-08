@@ -19,13 +19,13 @@
 		<li ng-repeat="day in weather.forecast.simpleforecast.forecastday" class="col-sm-3">
 			<div ng-class="{today: {{$first}}}">
 				<p><img class="{{ day.icon }}" ng-src="{{ day.icon_url }}">
-					<span ng-class="{'hide-snow': {{day.snow_allday.in}} <= 0}">{{day.snow_allday.in}} in</span></p>
+					<span ng-class="{'hide-snow': {{snow[$index]}} <= 0}">{{snow[$index]}} in</span></p>
 				<h3>
 					<span class="hover-area" ng-mouseover="mouseEnterForecast($index)" ng-mouseout="mouseOutForecast($index)">
 					{{ day.high.fahrenheit }}/{{ day.low.fahrenheit }}</span>
-				</h3>															
+				</h3>
 				<h4>{{ day.date.weekday }}</h4>
 			</div>
 		</li>
-	</ul>			
+	</ul>
 </div>

@@ -74,11 +74,20 @@ angular.module('myApp', ['ngRoute', 'ngSanitize'])
 	.then(function(data) {
 		$scope.success = true;
 		$scope.weather.forecast = data;
+		$scope.snow = [];
 		try {
 			$scope.timezone = $scope.weather.forecast.simpleforecast.forecastday[0].date.tz_long;
 		}
 		catch (e) {
 			$location.path('/settings');
+		}
+		// This was added to solve the problem of null values for inches of snow
+		// Which caused an error in ng-class
+		for (var i = 0; i < 4; i ++) {
+			$scope.snow[i] = $scope.weather.forecast.simpleforecast.forecastday[i].snow_allday.in;
+			if (typeof($scope.snow[i]) !== "number") {
+				$scope.snow[i] = 0;
+			}
 		}
 	});
 
